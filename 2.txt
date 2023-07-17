@@ -1,0 +1,120 @@
+package com.example.calculator;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity
+        implements View.OnClickListener {
+
+    int[] rid = {
+            R.id.d0Button,
+            R.id.d1Button,
+            R.id.d2Button,
+            R.id.d3Button,
+            R.id.d4Button,
+            R.id.d5Button,
+            R.id.d6Button,
+            R.id.d7Button,
+            R.id.d8Button,
+            R.id.d9Button,
+            R.id.decButton,
+            R.id.addButton,
+            R.id.subButton,
+            R.id.mulButton,
+            R.id.divButton
+    };
+    Button b;
+    EditText dispText;
+    Button equButton, clrButton;
+
+    //Hashtable<Integer, Button> hm = new Hashtable<>();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        dispText = findViewById(R.id.dispText);
+        dispText.setText("");
+
+        for (int id : rid) {
+            b = findViewById(id);
+            b.setOnClickListener(this);
+        }
+
+        equButton = findViewById(R.id.equButton);
+        equButton.setOnClickListener(this);
+
+        clrButton = findViewById(R.id.clrButton);
+        clrButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Button viewButton = (Button) v;
+        String text;
+
+        if (v.equals(equButton)) {
+            float rv = calc(dispText.getText().toString());
+            dispText.setText(String.valueOf(rv));
+            return;
+        }
+
+        if (v.equals(clrButton)) {
+            dispText.setText("");
+            return;
+        }
+
+        text = viewButton.getText().toString();
+        dispText.append(text);
+        System.out.println("View text = " + text);
+    }
+
+    public Float calc(String text) {
+        String[] op;
+        float op1, op2;
+        char opr;
+        float result;
+
+        op = text.split("[+*/#-]");
+
+        op1 = Float.parseFloat(op[0]);
+        op2 = Float.parseFloat(op[1]);
+        opr = text.charAt(op[0].length());
+
+        result = 0;
+
+        switch(opr) {
+            case '+':
+                result = op1 + op2;
+                break;
+
+            case '-':
+
+                result = op1 - op2;
+                break;
+
+            case '*':
+                result = op1 * op2;
+                break;
+
+            case '/':
+                result = op1 / op2;
+                break;
+
+            default:
+                System.out.println("Invalid input");
+                Toast.makeText(getBaseContext(), "Invalid Input",
+                        Toast.LENGTH_LONG).show();
+        }
+
+        System.out.println("" + op1 + opr + op2 + " = " + result);
+        return(result);
+    }
+}

@@ -1,0 +1,30 @@
+package com.example.texttospeechapplication;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.speech.tts.TextToSpeech
+import android.view.View;
+import android.widget.EditText;
+import java.util.Locale;
+public class MainActivity extends AppCompatActivity{
+EditText el;
+TextToSpeech tl:
+@Override
+protected void onCreate(Bundle savedInstanceState){
+super.onCreate(savedIlnstanceState);
+setContentView(R.layout.activity_main);
+el-findViewByld(R.id.editText);
+tl=-new TextToSpeech(getApplicationContext(),new TextToSpeech.OnlnitListener()
+{
+@Override
+public void onInit(int status)
+{
+if(status!=TextToSpeech.ERROR){
+tl.setLanguage(Locale.UK);
+}
+}
+});
+public void convert(View V){
+String tospeak=el.getText().toString():
+tl.speak(tospeak,TextToSpeech.QUEUE_FLUSH,null);
+}
+}
